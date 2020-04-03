@@ -5,4 +5,5 @@ build:
   stage: build
   image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
   script:
-    - docker buildx build --platform=linux/amd64 --push --progress=plain -t ${CI_REGISTRY_IMAGE}:latest .
+    - docker build -t ${CI_REGISTRY_IMAGE}:latest .
+    - docker push ${CI_REGISTRY_IMAGE}:latest
