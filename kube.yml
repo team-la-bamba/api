@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: node-app
+spec:
+  selector:
+    matchLabels:
+      name: node-app
+  replicas: 1
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        name: node-app
+    spec:
+      containers:
+        - name: api
+          image: registry.gitlab.com/team-la-bamba/api:latest
+          ports:
+            - containerPort: 3000
+              name: web
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 150m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-svc
+  namespace: default
+spec:
+  selector:
+    name: node-app
+  ports:
+    - port: 3000
+      targetPort: 3000
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: api-ing
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: app.labamba.space
+      http:
+        paths:
+          - backend:
+              serviceName: api-svc
+              servicePort: 3000
