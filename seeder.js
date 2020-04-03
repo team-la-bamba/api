@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const seeder = require('mongoose-seed');
 const uri = process.env.MONGODB_URI || 'mongodb://localhost/labamba';
 
