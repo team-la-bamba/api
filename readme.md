@@ -38,3 +38,9 @@ Hello, world
   "place": "Huddinge"
 }
 ```
+
+```json
+> GET /answers?from=2020-04-03
+> GET /answers?from=2020-04-02&to=2020-04-03
+> GET /answers?place=huddinge
+```
