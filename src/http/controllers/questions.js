@@ -10,10 +10,4 @@ module.exports = router => {
 
     await res.json(questions);
   });
-
-  router.post('/questions', async (req, res) => {
-    await res.json({
-      ok: true
-    });
-  });
 };
