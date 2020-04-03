@@ -9,5 +9,5 @@ FROM jitesoft/node-base:latest
 COPY --from=base /app /app
 WORKDIR /app
 
-ENTRYPOINT ['node']
-CMD ['dist/server.js']
+ENTRYPOINT ["node"]
+CMD ["dist/server.js"]
