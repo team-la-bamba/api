@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 module.exports = new mongoose.Schema(
   {
-    question_id: {
+    question: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Question',
     },
-    answer_id: {
+    answer: {
       type: mongoose.Schema.Types.ObjectId,
     },
     place: {

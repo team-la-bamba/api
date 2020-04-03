@@ -32,16 +32,14 @@ module.exports = router => {
       };
     }
 
-    const result = await Answer.find(query).populate('questions');
+    const result = await Answer.find(query).populate('question');
 
-    await res.json({
-      data: result
-    });
+    await res.json(result);
   });
 
   router.post('/answers', validate([
-    check('answer_id').exists().isString(),
-    check('question_id').exists().isString(),
+    check('answer').exists().isString(),
+    check('question').exists().isString(),
     check('place').exists().isString(),
   ]), async (req, res) => {
     await Answer.create(req.body);
