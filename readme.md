@@ -44,3 +44,11 @@ Hello, world
 > GET /answers?from=2020-04-02&to=2020-04-03
 > GET /answers?place=huddinge
 ```
+
+```json
+> GET /places
+
+[
+  "Huddinge"
+]
+```
