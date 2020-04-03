@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import mongodbURI from 'mongodb-uri';
 import schemaPlugin from './plugins/schema'
-import { loadFiles } from '../lib/utils';
 import fs from 'fs';
 import path from 'path';
 

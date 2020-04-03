@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "express-validator": "^6.4.0",
     "methods": "^1.1.2",
     "mongodb-uri": "^0.9.7",
     "mongoose": "^5.9.7",
