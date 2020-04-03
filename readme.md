@@ -55,7 +55,8 @@ Hello, world
     },
     "answer": {
       "_id": "5e877e6e4a112d3bd0bae8ba",
-      "text": "Ja"
+      "text": "Ja",
+      "weight": 5
     },
     "place": "Huddinge",
     "created_at": "2020-04-03T20:53:08.425Z"
