@@ -4,7 +4,7 @@ Hello, world
 
 ## Endpoints
 
-```
+```json
 > GET /questions
 
 [
@@ -26,6 +26,8 @@ Hello, world
   }
 ]
 ```
+
+```json
 > POST /answers
 
 {
