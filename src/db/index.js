@@ -9,7 +9,7 @@ const ucfirst = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 // Create database connection.
 export default () => {
-  const uri = process.env.MONGODB_URI || 'mongodb://localhost/labamba';
+  const uri = process.env.MONGODB_URI || 'mongodb://mongodb.default.svc.cluster.local/labamba';
   const options = {
     keepAlive: 1,
     keepAliveInitialDelay: 30000,
