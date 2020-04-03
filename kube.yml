@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
         - name: api
+          imagePullPolicy: Always
           image: registry.gitlab.com/team-la-bamba/api:latest
           ports:
             - containerPort: 3000
