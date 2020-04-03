@@ -31,8 +31,8 @@ Hello, world
 > POST /answers
 
 {
-	"question_id": "5e877e6e4a112d3bd0bae8b9",
-	"answer_id": "5e877e6e4a112d3bd0bae8ba",
-	"place": "Huddinge"
+  "question_id": "5e877e6e4a112d3bd0bae8b9",
+  "answer_id": "5e877e6e4a112d3bd0bae8ba",
+  "place": "Huddinge"
 }
 ```
