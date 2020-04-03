@@ -46,11 +46,26 @@ Hello, world
 
 [
   {
-    "_id": "5e878dd6badf384f07e50761",
-    "question_id": "5e877e6e4a112d3bd0bae8b9",
-    "answer_id": "5e877e6e4a112d3bd0bae8ba",
+    "_id": "5e87a234093375634de1c119",
+    "question": {
+      "type": "radio",
+      "lang": "sv",
+      "_id": "5e877e6e4a112d3bd0bae8b9",
+      "text": "Mår du bra?",
+      "answers": [
+        {
+          "_id": "5e877e6e4a112d3bd0bae8ba",
+          "text": "Ja"
+        },
+        {
+          "_id": "5e877e6e4a112d3bd0bae8bb",
+          "text": "Nej"
+        }
+      ]
+    },
+    "answer": "5e877e6e4a112d3bd0bae8ba",
     "place": "Huddinge",
-    "created_at": "2020-04-03T19:26:14.158Z"
+    "created_at": "2020-04-03T20:53:08.425Z"
   }
 ]
 ```
