@@ -19,7 +19,6 @@ export default app => {
   });
   app.use('/', router);
 
-
   // Not found middleware.
   app.use((req, res, next) => {
     const err = new Error('Not Found');
