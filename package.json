@@ -1,0 +1,31 @@
+{
+  "name": "api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "rimraf dist && babel src -d dist",
+    "dev": "nodemon -r dotenv/config --exec babel-node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/team-la-bamba/api.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "methods": "^1.1.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@jitesoft/babel-preset-main": "^2.2.1",
+    "core-js": "^3.6.4",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.2",
+    "rimraf": "^3.0.2"
+  }
+}
