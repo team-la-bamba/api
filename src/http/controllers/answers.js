@@ -8,7 +8,9 @@ module.exports = router => {
     const query = {};
 
     if (req.query.place) {
-      query['place'] = req.query.place;
+      query['place'] = {
+        $regex: new RegExp('^' + req.query.place.toLowerCase(), 'i'),
+      };
     }
 
     if (req.query.from && req.query.to) {
