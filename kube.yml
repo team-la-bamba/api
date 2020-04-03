@@ -16,6 +16,17 @@ spec:
     spec:
       containers:
         - name: api
+          env:
+            - name: MONGO_PW
+              valueFrom:
+                secretKeyRef:
+                  key: mongo-password
+                  name: mogon-credentials
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  key: mongo-username
+                  name: mogon-credentials
           imagePullPolicy: Always
           image: registry.gitlab.com/team-la-bamba/api:latest
           ports:
