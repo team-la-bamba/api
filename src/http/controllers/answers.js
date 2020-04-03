@@ -32,7 +32,13 @@ module.exports = router => {
       };
     }
 
-    const result = await Answer.find(query).populate('question');
+    let result = await Answer.find(query).populate('question').lean();
+
+    result = result.map(doc => {
+      doc.answer = doc.question.answers.filter(answer => answer._id.toString() === doc.answer.toString()).pop();
+      delete doc.question.answers;
+      return doc;
+    });
 
     await res.json(result);
   });

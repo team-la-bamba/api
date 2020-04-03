@@ -48,22 +48,15 @@ Hello, world
   {
     "_id": "5e87a234093375634de1c119",
     "question": {
+      "_id": "5e877e6e4a112d3bd0bae8b9",
       "type": "radio",
       "lang": "sv",
-      "_id": "5e877e6e4a112d3bd0bae8b9",
-      "text": "Mår du bra?",
-      "answers": [
-        {
-          "_id": "5e877e6e4a112d3bd0bae8ba",
-          "text": "Ja"
-        },
-        {
-          "_id": "5e877e6e4a112d3bd0bae8bb",
-          "text": "Nej"
-        }
-      ]
+      "text": "Mår du bra?"
     },
-    "answer": "5e877e6e4a112d3bd0bae8ba",
+    "answer": {
+      "_id": "5e877e6e4a112d3bd0bae8ba",
+      "text": "Ja"
+    },
     "place": "Huddinge",
     "created_at": "2020-04-03T20:53:08.425Z"
   }
