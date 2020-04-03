@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 import mongodbURI from 'mongodb-uri';
 import schemaPlugin from './plugins/schema'
 import { loadFiles } from '../lib/utils';
+import fs from 'fs';
+import path from 'path';
+
+const ucfirst = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 // Create database connection.
 export default () => {
@@ -31,7 +35,14 @@ export default () => {
   mongoose.plugin(schemaPlugin);
 
   // Create models of all schema files.
-  loadFiles(__dirname, ['index.js']).forEach(file => {
-    require('./' + schema);
-  });
+  fs.readdirSync(__dirname)
+    .filter(file => {
+      return path.extname(file) === '.js' && file !== 'index.js';
+    })
+    .map(file => {
+      return path.basename(file, path.extname(file));
+    })
+    .forEach(schema => {
+      mongoose.model(ucfirst(schema), require('./' + schema));
+    });
 };

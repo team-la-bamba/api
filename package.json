@@ -5,7 +5,8 @@
   "description": "",
   "scripts": {
     "build": "rimraf dist && babel src -d dist",
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node src/server.js",
+    "seed": "babel-node seeder.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
     "express": "^4.17.1",
     "methods": "^1.1.2",
     "mongodb-uri": "^0.9.7",
-    "mongoose": "^5.9.7"
+    "mongoose": "^5.9.7",
+    "mongoose-seed": "^0.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

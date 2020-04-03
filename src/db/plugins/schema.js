@@ -12,13 +12,9 @@ export default (schema, options) => {
     return one || this.create(doc);
   };
 
-  // Use id field instead _id.
   schema.set('toJSON', {
-    virtuals: true,
     versionKey: false,
     transform: (doc, ret, options) => {
-      ret.id = ret._id;
-      delete ret._id;
       delete ret.__v;
     }
   });
