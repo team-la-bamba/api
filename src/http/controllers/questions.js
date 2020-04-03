@@ -8,11 +8,11 @@ module.exports = router => {
         lang: req.query.lang ? req.query.lang : 'sv',
     });
 
-    res.json(questions);
+    await res.json(questions);
   });
 
   router.post('/questions', async (req, res) => {
-    res.json({
+    await res.json({
       ok: true
     });
   });
