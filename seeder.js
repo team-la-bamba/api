@@ -11,9 +11,11 @@ const data = [
         answers: [
           {
             text: 'Ja',
+            weight: 5,
           },
           {
             text: 'Nej',
+            weight: 10,
           }
         ]
       }

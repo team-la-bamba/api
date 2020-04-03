@@ -16,11 +16,13 @@ Hello, world
     "answers": [
       {
         "_id": "5e877e6e4a112d3bd0bae8ba",
-        "text": "Ja"
+        "text": "Ja",
+        "weight": 5
       },
       {
         "_id": "5e877e6e4a112d3bd0bae8bb",
-        "text": "Nej"
+        "text": "Nej",
+        "weight": 10
       }
     ]
   }
