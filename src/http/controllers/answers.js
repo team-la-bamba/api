@@ -1,6 +1,10 @@
+import path from 'path';
 import fs from 'fs';
 import mongoose from 'mongoose';
 import slugify from 'slugify';
+import { promisify } from 'util';
+
+const readFile = promisify(fs.readFile);
 
 const internalSlugify = (s) => {
   s = s.replace(/[*+~.()'"!:@_]/g, '-');
@@ -130,10 +134,10 @@ module.exports = (router) => {
     await Answer.insertMany(body);
 
     try {
-      response = await fs.promise.readFile(`../responses/${internalSlugify(body[0].place)}.json`);
+      response = JSON.parse(await readFile(path.resolve(`data/responses/${internalSlugify(body[0].place)}.json`)))
     } catch {
       try {
-        response = await fs.promise.readFile('../responses/standard.json');
+        response = JSON.parse(await readFile(path.resolve('data/responses/standard.json')));
       } catch {
         // Do nothing.
       }
