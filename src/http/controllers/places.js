@@ -3,7 +3,7 @@ import regions from '../../../data/regions';
 
 module.exports = router => {
   router.get('/places', async (req, res) => {
-    if (req.query.type === 'region') {
+    if (req.query.type === 'regions') {
       await res.json(regions);
     } else {
       await res.json(places);
