@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { check, validate } from './lib/validation';
 
 const Answer = mongoose.model('Answer');
 
