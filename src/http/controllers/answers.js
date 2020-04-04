@@ -130,7 +130,7 @@ module.exports = (router) => {
     await Answer.insertMany(body);
 
     try {
-      response = await fs.promise.readFile(`../responses/${internalSlugify(body[0].place).json}`);
+      response = await fs.promise.readFile(`../responses/${internalSlugify(body[0].place)}.json`);
     } catch {
       try {
         response = await fs.promise.readFile('../responses/standard.json');
