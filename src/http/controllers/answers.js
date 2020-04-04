@@ -1,7 +1,6 @@
 import fs from 'fs';
 import mongoose from 'mongoose';
 import slugify from 'slugify';
-import defaultPostResponse from '';
 
 const internalSlugify = (s) => {
   s = s.replace(/[*+~.()'"!:@_]/g, '-');
