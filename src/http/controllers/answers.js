@@ -48,6 +48,8 @@ module.exports = router => {
         preoutput[doc.place][doc.question._id] = Object.assign({}, doc.question);
       }
 
+      preoutput[doc.place][doc.question._id].answers = [...preoutput[doc.place][doc.question._id].answers];
+
       preoutput[doc.place][doc.question._id].answers.forEach((answer, i) => {
         preoutput[doc.place][doc.question._id].answers[i] = Object.assign({}, preoutput[doc.place][doc.question._id].answers[i]);
 
