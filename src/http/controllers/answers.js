@@ -48,6 +48,10 @@ module.exports = router => {
         preoutput[doc.place][doc.question._id] = Object.assign({}, doc.question);
       }
 
+      if (!preoutput[doc.place][doc.question._id].total) {
+        preoutput[doc.place][doc.question._id].total = 0;
+      }
+
       preoutput[doc.place][doc.question._id].answers = [...preoutput[doc.place][doc.question._id].answers];
 
       preoutput[doc.place][doc.question._id].answers.forEach((answer, i) => {
@@ -59,6 +63,7 @@ module.exports = router => {
 
         if (answer._id.toString() === doc.answer.toString()) {
           preoutput[doc.place][doc.question._id].answers[i].count += 1;
+          preoutput[doc.place][doc.question._id].total += 1;
         }
       });
     });

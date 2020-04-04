@@ -74,6 +74,7 @@ Hello, world
         "type": "radio",
         "lang": "sv",
         "text": "Mår du bra?",
+        "total": 4,
         "answers": [
           {
             "_id": "5e877e6e4a112d3bd0bae8ba",
@@ -97,6 +98,7 @@ Hello, world
         "type": "radio",
         "lang": "sv",
         "text": "Mår du bra?",
+        "total": 3,
         "answers": [
           {
             "_id": "5e877e6e4a112d3bd0bae8ba",
