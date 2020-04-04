@@ -1,4 +1,13 @@
+import fs from 'fs';
 import mongoose from 'mongoose';
+import slugify from 'slugify';
+
+const internalSlugify = s => {
+  s = s.replace(/[*+~.()'"!:@_]/g, '-');
+  return slugify(s, {
+    lower: true
+  });
+};
 
 const Answer = mongoose.model('Answer');
 
@@ -100,9 +109,22 @@ module.exports = router => {
       body = [req.body];
     }
 
-    await Answer.insertMany(body);
-    await res.json({
+    if (!body.length || !body[0].place) {
+      throw new Error('No answer submitted');
+    }
+
+    let response = {
       success: true,
-    });
+    };
+
+    await Answer.insertMany(body);
+
+    const slug = internalSlugify(body[0].place);
+    const file = __dirname + `/responses/${slug}.json`;
+    if (fs.existsSync(file)) {
+      response = require(file);
+    }
+
+    await res.json(response);
   });
 };
