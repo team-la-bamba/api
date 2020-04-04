@@ -64,7 +64,7 @@ Hello, world
           {
             "_id": "5e877e6e4a112d3bd0bae8bb",
             "text": "Nej",
-            "count": 3
+            "count": 0
           }
         ]
       }
@@ -82,7 +82,7 @@ Hello, world
           {
             "_id": "5e877e6e4a112d3bd0bae8ba",
             "text": "Ja",
-            "count": 4
+            "count": 0
           },
           {
             "_id": "5e877e6e4a112d3bd0bae8bb",
