@@ -16,13 +16,13 @@
     "@jitesoft/yolog": "^2.7.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "methods": "^1.1.2",
     "mongodb-uri": "^0.9.7",
     "mongoose": "^5.9.7",
-    "mongoose-seed": "^0.6.0"
+    "mongoose-seed": "^0.6.0",
+    "slugify": "^1.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
