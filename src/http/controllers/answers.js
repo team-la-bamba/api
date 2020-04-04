@@ -131,8 +131,8 @@ module.exports = (router) => {
 
     const slug = internalSlugify(body[0].place);
 
-    [slug, 'standard'].forEach((name) => {
-      const file = __dirname + `/responses/${slug}.json`;
+    [slug, 'standard'].forEach(name => {
+      const file = __dirname + `/responses/${name}.json`;
       if (fs.existsSync(file)) {
         response = require(file);
       }
