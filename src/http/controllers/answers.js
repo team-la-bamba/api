@@ -108,6 +108,28 @@ module.exports = (router) => {
       });
     });
 
+    /*
+      answers.forEach((answer) => {
+    answer.questions.forEach((question) => {
+      if (typeof questions[question._id] === 'undefined') {
+        questions[question._id] = {
+          question: question,
+          places: [],
+        };
+      }
+
+      if (!question.answers) {
+        return;
+      }
+
+      questions[question._id].places.push({
+        place: answer.place,
+        answers: question.answers,
+      });
+    });
+  });
+  */
+
     for (const place in preoutput) {
       preoutput[place] = Object.values(preoutput[place]);
     }
@@ -129,7 +151,29 @@ module.exports = (router) => {
       return 0;
     });
 
-    await res.json(output);
+    const groupedByQuestions = {};
+
+    output.forEach((answer) => {
+      answer.questions.forEach((question) => {
+        if (typeof groupedByQuestions[question._id] === 'undefined') {
+          groupedByQuestions[question._id] = {
+            question: question,
+            places: [],
+          };
+        }
+
+        if (!question.answers) {
+          return;
+        }
+
+        groupedByQuestions[question._id].places.push({
+          place: answer.place,
+          answers: question.answers,
+        });
+      });
+    });
+
+    await res.json(Object.values(groupedByQuestions));
   });
 
   router.post('/answers', async (req, res) => {
