@@ -16,7 +16,8 @@ export default () => {
     socketTimeoutMS: 30000,
     useCreateIndex: true,
     useNewUrlParser: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true
   };
 
   mongoose.connect(mongodbURI.formatMongoose(uri), options);
