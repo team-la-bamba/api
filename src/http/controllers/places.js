@@ -1,6 +1,6 @@
 import municipalities from '../../../data/municipalities';
 import regions from '../../../data/regions';
-import all from '../../../data/regions+municipalities.json';
+import grouped from '../../../data/regions+municipalities.json';
 
 module.exports = router => {
   router.get('/places', async (req, res) => {
@@ -8,8 +8,8 @@ module.exports = router => {
       case 'regions':
         await res.json(regions);
         break;
-      case 'all':
-        await res.json(all);
+      case 'grouped':
+        await res.json(grouped);
         break;
       default:
         await res.json(municipalities);
