@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import mongoose from 'mongoose';
 import slugify from 'slugify';
-import { promisify } from 'util';
+import { promisify } from 'util';
 import groupedPlaces from '../../../data/regions+municipalities.json';
 
 const readFile = promisify(fs.readFile);
@@ -24,6 +24,17 @@ module.exports = (router) => {
     if (req.query.place) {
       query['place'] = {
         $regex: new RegExp('^' + req.query.place.toLowerCase(), 'i'),
+      };
+    } else if (req.query.region) {
+      // find municipalities for region.
+      const region = groupedPlaces
+        .filter((row) => {
+          return row.region.toLowerCase() === req.query.region.toLowerCase();
+        })
+        .pop();
+
+      query['place'] = {
+        $in: region.municipalities,
       };
     }
 
@@ -84,9 +95,11 @@ module.exports = (router) => {
           preoutput[doc.place][doc.question._id].answers[i].count = 0;
         }
 
-        if (answer._id.toString() === doc.answer.toString()) {
-          preoutput[doc.place][doc.question._id].answers[i].count += 1;
-          preoutput[doc.place][doc.question._id].total += 1;
+        if (answer._id && doc.answer) {
+          if (answer._id.toString() === doc.answer.toString()) {
+            preoutput[doc.place][doc.question._id].answers[i].count += 1;
+            preoutput[doc.place][doc.question._id].total += 1;
+          }
         }
       });
     });
@@ -135,13 +148,17 @@ module.exports = (router) => {
     await Answer.insertMany(body);
 
     try {
-      response = JSON.parse(await readFile(path.resolve(`data/responses/${internalSlugify(body[0].place)}.json`)))
+      response = JSON.parse(
+        await readFile(
+          path.resolve(`data/responses/${internalSlugify(body[0].place)}.json`)
+        )
+      );
     } catch {
       try {
         // find region for municipality
-        const regionRow = groupedPlaces.filter(row => {
+        const regionRow = groupedPlaces.filter((row) => {
           return row.municipalities.indexOf(body[0].place) !== -1;
-        })
+        });
 
         if (regionRow.length) {
           const region = regionRow.pop().region;
@@ -163,12 +180,17 @@ module.exports = (router) => {
             links: [
               {
                 text: `Läs mer om coronaviruset i Region ${region} på 1177.se`,
-                link: `https://www.1177.se/${internalSlugify(regionSlug, false)}/corona/`
-              }
-            ]
+                link: `https://www.1177.se/${internalSlugify(
+                  regionSlug,
+                  false
+                )}/corona/`,
+              },
+            ],
           };
         } else {
-          response = JSON.parse(await readFile(path.resolve('data/responses/standard.json')));
+          response = JSON.parse(
+            await readFile(path.resolve('data/responses/standard.json'))
+          );
         }
       } catch {
         // Do nothing.

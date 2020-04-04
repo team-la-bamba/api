@@ -64,6 +64,7 @@ Hello, world
 > GET /answers?from=2020-04-02&to=2020-04-03
 > GET /answers?place=huddinge
 > GET /answers?lang=en
+> GET /answers?region=Stockholms Län
 
 [
   {
