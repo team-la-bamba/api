@@ -47,7 +47,7 @@ export const requireFiles = (dir, excluded = []) => {
  * Load files in folder and exclude files.
  *
  * Example input
- * > loadFiles(__dirname, 'index.js')
+ * > loadFilesAsync(__dirname, 'index.js')
  *
  * @param {string} dir
  * @param {array|string} excluded
@@ -66,7 +66,7 @@ export const loadFilesAsync = async (dir, excluded = []) => {
  * Load and require files (default).
  *
  * Example input
- * > requireFiles(__dirname, 'index.js')
+ * > requireFilesAsync(__dirname, 'index.js')
  *
  * @param {string} dir
  * @param {array|string} excluded
