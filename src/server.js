@@ -1,10 +1,9 @@
 import 'dotenv/config';
-import app from './app';
+import logger from './lib/logger';
 
-const debug = require('debug')('api');
-const port = process.env.PORT || 3000;
+Promise.resolve().then(async () => {
+  await logger.info('Server starting...');
+  await logger.debug('Logging with debug is enabled.');
+  (await require('./app').default).listen(process.env.PORT || 3000);
+}).catch(error => logger.error(error) && process.exit(1));
 
-debug('Server starting...');
-debug('logging with debug enabled!');
-
-app.listen(port);

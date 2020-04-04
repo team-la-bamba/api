@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
 import mongodbURI from 'mongodb-uri';
 import schemaPlugin from './plugins/schema'
+import logger from '../lib/logger';
 import fs from 'fs';
 import path from 'path';
 
 const ucfirst = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 // Create database connection.
-export default () => {
+export default async () => {
   const uri = process.env.MONGODB_URI || `mongodb://localhost:27017/labamba`;
   const options = {
     keepAlive: 1,
@@ -20,22 +21,22 @@ export default () => {
     useUnifiedTopology: true
   };
 
-  mongoose.connect(mongodbURI.formatMongoose(uri), options);
+  await mongoose.connect(mongodbURI.formatMongoose(uri), options);
   mongoose.set('debug', process.env.NODE_ENV !== 'production');
 
   mongoose.connection.on(
     'error',
-    console.error.bind(console, 'connection error:')
+    (e) => logger.error('Connection error: \n' + e)
   );
   mongoose.connection.once('open', () => {
-    console.log('Database is connected');
+    logger.info('Database is connected');
   });
 
   // Assign plugins to mongoose.
   mongoose.plugin(schemaPlugin);
 
   // Create models of all schema files.
-  fs.readdirSync(__dirname)
+  (await fs.promises.readdir(__dirname))
     .filter(file => {
       return path.extname(file) === '.js' && file !== 'index.js';
     })

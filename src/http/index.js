@@ -2,10 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
-import { loadFiles } from '../lib/utils';
+import { loadFilesAsync } from '../lib/utils';
 import { asyncRouter } from './utils';
 
-export default app => {
+const http = async (app) => {
   app.enable('trust proxy');
   app.set('port', process.env.PORT || 3000);
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -14,7 +14,7 @@ export default app => {
 
   const router = asyncRouter(express.Router());
   const controllers = path.join(__dirname, 'controllers');
-  loadFiles(controllers).forEach(file => {
+  (await loadFilesAsync(controllers)).forEach(file => {
     require(path.join(controllers, file))(router);
   });
   app.use('/', router);
@@ -39,3 +39,9 @@ export default app => {
     });
   });
 };
+
+export {
+  http
+}
+
+export default http;
