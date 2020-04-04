@@ -3,13 +3,14 @@ import fs from 'fs';
 import mongoose from 'mongoose';
 import slugify from 'slugify';
 import { promisify } from 'util';
+import groupedPlaces from '../../../data/regions+municipalities.json';
 
 const readFile = promisify(fs.readFile);
 
-const internalSlugify = (s) => {
+const internalSlugify = (s, lower = true) => {
   s = s.replace(/[*+~.()'"!:@_]/g, '-');
   return slugify(s, {
-    lower: true,
+    lower: lower,
   });
 };
 
@@ -137,7 +138,28 @@ module.exports = (router) => {
       response = JSON.parse(await readFile(path.resolve(`data/responses/${internalSlugify(body[0].place)}.json`)))
     } catch {
       try {
-        response = JSON.parse(await readFile(path.resolve('data/responses/standard.json')));
+        // find region for municipality
+        const regionRow = groupedPlaces.filter(row => {
+          return row.municipalities.indexOf(body[0].place) !== -1;
+        })
+
+        if (regionRow.length) {
+          const region = regionRow.pop().region;
+          // Weried 1177.se
+          const regionSlug = region === 'Stockholms län' ? 'Stockholm' : region;
+
+          response = {
+            text: 'Tack för att du deltog!',
+            links: [
+              {
+                text: `Läs mer om coronaviruset i Region ${region} på 1177`,
+                link: `https://www.1177.se/${internalSlugify(regionSlug, false)}/corona/`
+              }
+            ]
+          };
+        } else {
+          response = JSON.parse(await readFile(path.resolve('data/responses/standard.json')));
+        }
       } catch {
         // Do nothing.
       }
