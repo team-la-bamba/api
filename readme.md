@@ -31,6 +31,25 @@ Hello, world
 ```
 
 ```json
+> POST /questions
+
+{
+  "text": "Mår du bra?",
+  "type": "radio",
+  "answers": [
+    {
+      "text": "Ja",
+      "weight": 5
+    },
+    {
+      "text": "Nej",
+      "weight": 10
+      }
+  ]
+}
+```
+
+```json
 > POST /answers
 
 {
