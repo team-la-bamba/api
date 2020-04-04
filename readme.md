@@ -6,6 +6,7 @@ Hello, world
 
 ```json
 > GET /questions
+> GET /questions?lang=en
 
 [
   {
@@ -43,23 +44,54 @@ Hello, world
 > GET /answers?from=2020-04-03
 > GET /answers?from=2020-04-02&to=2020-04-03
 > GET /answers?place=huddinge
+> GET /answers?lang=en
 
 [
   {
-    "_id": "5e87a234093375634de1c119",
-    "question": {
-      "_id": "5e877e6e4a112d3bd0bae8b9",
-      "type": "radio",
-      "lang": "sv",
-      "text": "Mår du bra?"
-    },
-    "answer": {
-      "_id": "5e877e6e4a112d3bd0bae8ba",
-      "text": "Ja",
-      "weight": 5
-    },
+    "place": "Göteborg",
+    "questions": [
+      {
+        "_id": "5e877e6e4a112d3bd0bae8b9",
+        "type": "radio",
+        "lang": "sv",
+        "text": "Mår du bra?",
+        "answers": [
+          {
+            "_id": "5e877e6e4a112d3bd0bae8ba",
+            "text": "Ja",
+            "count": 4
+          },
+          {
+            "_id": "5e877e6e4a112d3bd0bae8bb",
+            "text": "Nej",
+            "count": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
     "place": "Huddinge",
-    "created_at": "2020-04-03T20:53:08.425Z"
+    "questions": [
+      {
+        "_id": "5e877e6e4a112d3bd0bae8b9",
+        "type": "radio",
+        "lang": "sv",
+        "text": "Mår du bra?",
+        "answers": [
+          {
+            "_id": "5e877e6e4a112d3bd0bae8ba",
+            "text": "Ja",
+            "count": 4
+          },
+          {
+            "_id": "5e877e6e4a112d3bd0bae8bb",
+            "text": "Nej",
+            "count": 3
+          }
+        ]
+      }
+    ]
   }
 ]
 ```

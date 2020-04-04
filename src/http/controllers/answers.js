@@ -6,6 +6,7 @@ const Answer = mongoose.model('Answer');
 module.exports = router => {
   router.get('/answers', async(req, res) => {
     const query = {};
+    const lang = req.query.lang ? req.query.lang : 'sv';
 
     if (req.query.place) {
       query['place'] = {
@@ -32,15 +33,56 @@ module.exports = router => {
       };
     }
 
-    let result = await Answer.find(query).populate('question').lean();
-
-    result = result.map(doc => {
-      doc.answer = doc.question.answers.filter(answer => answer._id.toString() === doc.answer.toString()).pop();
-      delete doc.question.answers;
-      return doc;
+    const result = await (await Answer.find(query).populate('question').lean()).filter(doc => {
+      return doc.question.lang === lang;
     });
 
-    await res.json(result);
+    const preoutput = {};
+
+    result.forEach(doc => {
+      if (typeof preoutput[doc.place] === 'undefined') {
+        preoutput[doc.place] = {};
+      }
+
+      if (typeof preoutput[doc.place][doc.question._id] === 'undefined') {
+        preoutput[doc.place][doc.question._id] = Object.assign({}, doc.question);
+      }
+
+      preoutput[doc.place][doc.question._id].answers.forEach((answer, i) => {
+        preoutput[doc.place][doc.question._id].answers[i] = Object.assign({}, preoutput[doc.place][doc.question._id].answers[i]);
+
+        if (!preoutput[doc.place][doc.question._id].answers[i].count) {
+          preoutput[doc.place][doc.question._id].answers[i].count = 0;
+        }
+
+        if (answer._id.toString() === doc.answer.toString()) {
+          preoutput[doc.place][doc.question._id].answers[i].count += 1;
+        }
+      });
+    });
+
+    for (const place in preoutput) {
+      preoutput[place] = Object.values(preoutput[place]);
+    }
+
+    const output = [];
+
+    for (const place in preoutput) {
+      const docs = preoutput[place];
+      const row = {
+        place: place,
+        questions: docs
+      };
+      output.push(row);
+    }
+
+    output.sort((a, b) => {
+      if (a.place < b.place) return -1;
+      if (a.place > b.place) return 1;
+      return 0;
+    });
+
+    await res.json(output);
   });
 
   router.post('/answers', validate([
