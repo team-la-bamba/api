@@ -68,48 +68,59 @@ Hello, world
 
 [
   {
-    "place": "Göteborg",
-    "questions": [
+    "question": {
+      "_id": "5e889dfe81b78d680a12ab81",
+      "type": "radio",
+      "lang": "sv",
+      "text": "Mår du bra?",
+      "answers": [
+        {
+          "_id": "5e889dfe81b78de31412ab82",
+          "text": "Ja",
+          "weight": 5,
+          "count": 0
+        },
+        {
+          "_id": "5e889dfe81b78d55f112ab83",
+          "text": "Nej",
+          "weight": 10,
+          "count": 0
+        }
+      ],
+      "total": 0
+    },
+    "places": [
       {
-        "_id": "5e877e6e4a112d3bd0bae8b9",
-        "type": "radio",
-        "lang": "sv",
-        "text": "Mår du bra?",
-        "total": 4,
+        "place": "Huddinge",
         "answers": [
           {
-            "_id": "5e877e6e4a112d3bd0bae8ba",
+            "_id": "5e889dfe81b78de31412ab82",
             "text": "Ja",
-            "count": 4
+            "weight": 5,
+            "count": 0
           },
           {
-            "_id": "5e877e6e4a112d3bd0bae8bb",
+            "_id": "5e889dfe81b78d55f112ab83",
             "text": "Nej",
+            "weight": 10,
             "count": 0
           }
         ]
-      }
-    ]
-  },
-  {
-    "place": "Huddinge",
-    "questions": [
+      },
       {
-        "_id": "5e877e6e4a112d3bd0bae8b9",
-        "type": "radio",
-        "lang": "sv",
-        "text": "Mår du bra?",
-        "total": 3,
+        "place": "Stockholm",
         "answers": [
           {
-            "_id": "5e877e6e4a112d3bd0bae8ba",
+            "_id": "5e889dfe81b78de31412ab82",
             "text": "Ja",
+            "weight": 5,
             "count": 0
           },
           {
-            "_id": "5e877e6e4a112d3bd0bae8bb",
+            "_id": "5e889dfe81b78d55f112ab83",
             "text": "Nej",
-            "count": 3
+            "weight": 10,
+            "count": 0
           }
         ]
       }
