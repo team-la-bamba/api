@@ -17,16 +17,11 @@ spec:
       containers:
         - name: api
           env:
-            - name: MONGO_PW
+            - name: MONGODB_URI
               valueFrom:
                 secretKeyRef:
-                  key: mongo-password
-                  name: mogon-credentials
-            - name: MONGO_USER
-              valueFrom:
-                secretKeyRef:
-                  key: mongo-username
-                  name: mogon-credentials
+                  name: mongo-credentials
+                  key: connection_string
           imagePullPolicy: Always
           image: registry.gitlab.com/team-la-bamba/api:latest
           ports:
@@ -58,7 +53,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-    - host: app.labamba.space
+    - host: api.labamba.space
       http:
         paths:
           - backend:
