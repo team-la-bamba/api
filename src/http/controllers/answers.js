@@ -145,8 +145,18 @@ module.exports = (router) => {
 
         if (regionRow.length) {
           const region = regionRow.pop().region;
-          // Weried 1177.se
-          const regionSlug = region === 'Stockholms län' ? 'Stockholm' : region;
+          // Strange slug on 1177.se for some regions.
+          let regionSlug = region;
+          switch (region) {
+            case 'Stockholms län':
+              regionSlug = 'Stockholm';
+              break;
+            case 'Örebro län':
+              regionSlug = 'Orebrolan';
+              break;
+            default:
+              break;
+          }
 
           response = {
             text: 'Tack för att du deltog!',
