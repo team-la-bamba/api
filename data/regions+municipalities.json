@@ -1,0 +1,397 @@
+[
+  {
+    "region": "Blekinge",
+    "municipalities": [
+      "Karlshamn",
+      "Karlskrona",
+      "Olofström",
+      "Ronneby",
+      "Sölvesborg"
+    ]
+  },
+  {
+    "region": "Dalarna",
+    "municipalities": [
+      "Avesta",
+      "Borlänge",
+      "Falun",
+      "Gagnef",
+      "Hedemora",
+      "Leksand",
+      "Ludvika",
+      "Malung-Sälen",
+      "Mora",
+      "Orsa",
+      "Rättvik",
+      "Smedjebacken",
+      "Säter",
+      "Vansbro",
+      "Älvdalen"
+    ]
+  },
+  {
+    "region": "Gotland",
+    "municipalities": [
+      "Gotland"
+    ]
+  },
+  {
+    "region": "Gävleborgs",
+    "municipalities": [
+      "Bollnäs",
+      "Gävle",
+      "Hofors",
+      "Hudiksvall",
+      "Ljusdal",
+      "Nordanstig",
+      "Ockelbo",
+      "Ovanåker",
+      "Sandviken",
+      "Söderhamn"
+    ]
+  },
+  {
+    "region": "Halland",
+    "municipalities": [
+      "Falkenberg",
+      "Halmstad",
+      "Hylte",
+      "Kungsbacka",
+      "Laholm",
+      "Varberg"
+    ]
+  },
+  {
+    "region": "Jämtland Härjedalen",
+    "municipalities": [
+      "Berg",
+      "Bräcke",
+      "Härjedalen",
+      "Krokom",
+      "Ragunda",
+      "Strömsund",
+      "Åre",
+      "Östersund"
+    ]
+  },
+  {
+    "region": "Jönköpings län",
+    "municipalities": [
+      "Aneby",
+      "Eksjö",
+      "Gislaved",
+      "Gnosjö",
+      "Habo",
+      "Jönköping",
+      "Mullsjö",
+      "Nässjö",
+      "Sävsjö",
+      "Tranås",
+      "Vaggeryd",
+      "Vetlanda",
+      "Värnamo"
+    ]
+  },
+  {
+    "region": "Kalmar län",
+    "municipalities": [
+      "Borgholm",
+      "Emmaboda",
+      "Hultsfred",
+      "Högsby",
+      "Kalmar",
+      "Mönsterås",
+      "Mörbylånga",
+      "Nybro",
+      "Oskarshamn",
+      "Torsås",
+      "Vimmerby",
+      "Västervik"
+    ]
+  },
+  {
+    "region": "Kronoberg",
+    "municipalities": [
+      "Alvesta",
+      "Lessebo",
+      "Ljungby",
+      "Markaryd",
+      "Tingsryd",
+      "Uppvidinge",
+      "Växjö",
+      "Älmhult"
+    ]
+  },
+  {
+    "region": "Norrbotten",
+    "municipalities": [
+      "Arjeplog",
+      "Arvidsjaur",
+      "Boden",
+      "Gällivare",
+      "Haparanda",
+      "Jokkmokk",
+      "Kalix",
+      "Kiruna",
+      "Luleå",
+      "Pajala",
+      "Piteå",
+      "Älvsbyn",
+      "Överkalix",
+      "Övertorneå"
+    ]
+  },
+  {
+    "region": "Skåne",
+    "municipalities": [
+      "Bjuv",
+      "Bromölla",
+      "Burlöv",
+      "Båstad",
+      "Eslöv",
+      "Helsingborg",
+      "Hässleholm",
+      "Höganäs",
+      "Hörby",
+      "Höör",
+      "Klippan",
+      "Kristianstad",
+      "Kävlinge",
+      "Landskrona",
+      "Lomma",
+      "Lund",
+      "Malmö",
+      "Osby",
+      "Perstorp",
+      "Simrishamn",
+      "Sjöbo",
+      "Skurup",
+      "Staffanstorp",
+      "Svalöv",
+      "Svedala",
+      "Tomelilla",
+      "Trelleborg",
+      "Vellinge",
+      "Ystad",
+      "Ängelholm",
+      "Åstorp",
+      "Örkelljunga",
+      "Östra Göinge"
+    ]
+  },
+  {
+    "region": "Stockholms län",
+    "municipalities": [
+      "Botkyrka",
+      "Danderyd",
+      "Ekerö",
+      "Haninge",
+      "Huddinge",
+      "Järfälla",
+      "Lidingö",
+      "Nacka",
+      "Norrtälje",
+      "Nykvarn",
+      "Nynäshamn",
+      "Salem",
+      "Sigtuna",
+      "Sollentuna",
+      "Solna",
+      "Stockholm",
+      "Sundbyberg",
+      "Södertälje",
+      "Tyresö",
+      "Täby",
+      "Upplands Väsby",
+      "Upplands-Bro",
+      "Vallentuna",
+      "Vaxholm",
+      "Värmdö",
+      "Österåker"
+    ]
+  },
+  {
+    "region": "Sörmland",
+    "municipalities": [
+      "Eskilstuna",
+      "Flen",
+      "Gnesta",
+      "Katrineholm",
+      "Nyköping",
+      "Oxelösund",
+      "Strängnäs",
+      "Trosa",
+      "Vingåker"
+    ]
+  },
+  {
+    "region": "Uppsala län",
+    "municipalities": [
+      "Enköping",
+      "Heby",
+      "Håbo",
+      "Knivsta",
+      "Tierp",
+      "Uppsala",
+      "Älvkarleby",
+      "Östhammar"
+    ]
+  },
+  {
+    "region": "Värmland",
+    "municipalities": [
+      "Arvika",
+      "Eda",
+      "Filipstad",
+      "Forshaga",
+      "Grums",
+      "Hagfors",
+      "Hammarö",
+      "Karlstad",
+      "Kil",
+      "Kristinehamn",
+      "Munkfors",
+      "Storfors",
+      "Sunne",
+      "Säffle",
+      "Torsby",
+      "Årjäng"
+    ]
+  },
+  {
+    "region": "Västerbotten",
+    "municipalities": [
+      "Bjurholm",
+      "Dorotea",
+      "Lycksele",
+      "Malå",
+      "Nordmaling",
+      "Norsjö",
+      "Robertsfors",
+      "Skellefteå",
+      "Sorsele",
+      "Storuman",
+      "Umeå",
+      "Vilhelmina",
+      "Vindeln",
+      "Vännäs",
+      "Åsele"
+    ]
+  },
+  {
+    "region": "Västernorrland",
+    "municipalities": [
+      "Härnösand",
+      "Kramfors",
+      "Sollefteå",
+      "Sundsvall",
+      "Timrå",
+      "Ånge",
+      "Örnsköldsvik"
+    ]
+  },
+  {
+    "region": "Västmanland",
+    "municipalities": [
+      "Arboga",
+      "Fagersta",
+      "Hallstahammar",
+      "Kungsör",
+      "Köping",
+      "Norberg",
+      "Sala",
+      "Skinnskatteberg",
+      "Surahammar",
+      "Västerås"
+    ]
+  },
+  {
+    "region": "Västra Götaland",
+    "municipalities": [
+      "Ale",
+      "Alingsås",
+      "Bengtsfors",
+      "Bollebygd",
+      "Borås",
+      "Dals-Ed",
+      "Essunga",
+      "Falköping",
+      "Färgelanda",
+      "Grästorp",
+      "Gullspång",
+      "Göteborg",
+      "Götene",
+      "Herrljunga",
+      "Hjo",
+      "Härryda",
+      "Karlsborg",
+      "Kungälv",
+      "Lerum",
+      "Lidköping",
+      "Lilla Edet",
+      "Lysekil",
+      "Mariestad",
+      "Mark",
+      "Mellerud",
+      "Munkedal",
+      "Mölndal",
+      "Orust",
+      "Partille",
+      "Skara",
+      "Skövde",
+      "Sotenäs",
+      "Stenungsund",
+      "Strömstad",
+      "Svenljunga",
+      "Tanum",
+      "Tibro",
+      "Tidaholm",
+      "Tjörn",
+      "Tranemo",
+      "Trollhättan",
+      "Töreboda",
+      "Uddevalla",
+      "Ulricehamn",
+      "Vara",
+      "Vänersborg",
+      "Vårgårda",
+      "Åmål",
+      "Öckerö"
+    ]
+  },
+  {
+    "region": "Örebro län",
+    "municipalities": [
+      "Askersund",
+      "Degerfors",
+      "Hallsberg",
+      "Hällefors",
+      "Karlskoga",
+      "Kumla",
+      "Laxå",
+      "Lekeberg",
+      "Lindesberg",
+      "Ljusnarsberg",
+      "Nora",
+      "Örebro"
+    ]
+  },
+  {
+    "region": "Östergötland",
+    "municipalities": [
+      "Boxholm",
+      "Finspång",
+      "Kinda",
+      "Linköping",
+      "Mjölby",
+      "Motala",
+      "Norrköping",
+      "Söderköping",
+      "Vadstena",
+      "Valdemarsvik",
+      "Ydre",
+      "Åtvidaberg",
+      "Ödeshög"
+    ]
+  }
+]
