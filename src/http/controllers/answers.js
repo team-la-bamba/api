@@ -92,12 +92,16 @@ module.exports = router => {
     await res.json(output);
   });
 
-  router.post('/answers', validate([
-    check('answer').exists().isString(),
-    check('question').exists().isString(),
-    check('place').exists().isString(),
-  ]), async (req, res) => {
-    await Answer.create(req.body);
+  router.post('/answers', async (req, res) => {
+    let body = [];
+
+    if (Array.isArray(req.body)) {
+      body = req.body;
+    } else {
+      body = [req.body];
+    }
+
+    await Answer.insertMany(body);
     await res.json({
       success: true,
     });
