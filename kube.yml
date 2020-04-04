@@ -53,7 +53,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-    - host: app.labamba.space
+    - host: api.labamba.space
       http:
         paths:
           - backend:

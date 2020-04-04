@@ -28,4 +28,4 @@ deploy:
     - master
   environment:
     name: production
-    url: https://app.labamba.space
+    url: https://api.labamba.space
