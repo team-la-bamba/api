@@ -60,7 +60,11 @@ module.exports = (router) => {
     const result = await (
       await Answer.find(query).populate('question').lean()
     ).filter((doc) => {
-      return doc.question.lang === lang;
+      if (!doc.question) {
+        return false;
+      }
+
+      return doc.question.lang && doc.question.lang === lang;
     });
 
     const preoutput = {};
