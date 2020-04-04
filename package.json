@@ -16,7 +16,6 @@
     "@jitesoft/yolog": "^2.7.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "methods": "^1.1.2",
