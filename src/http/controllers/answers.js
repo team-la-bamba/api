@@ -2,17 +2,17 @@ import fs from 'fs';
 import mongoose from 'mongoose';
 import slugify from 'slugify';
 
-const internalSlugify = s => {
+const internalSlugify = (s) => {
   s = s.replace(/[*+~.()'"!:@_]/g, '-');
   return slugify(s, {
-    lower: true
+    lower: true,
   });
 };
 
 const Answer = mongoose.model('Answer');
 
-module.exports = router => {
-  router.get('/answers', async(req, res) => {
+module.exports = (router) => {
+  router.get('/answers', async (req, res) => {
     const query = {};
     const lang = req.query.lang ? req.query.lang : 'sv';
 
@@ -41,29 +41,39 @@ module.exports = router => {
       };
     }
 
-    const result = await (await Answer.find(query).populate('question').lean()).filter(doc => {
+    const result = await (
+      await Answer.find(query).populate('question').lean()
+    ).filter((doc) => {
       return doc.question.lang === lang;
     });
 
     const preoutput = {};
 
-    result.forEach(doc => {
+    result.forEach((doc) => {
       if (typeof preoutput[doc.place] === 'undefined') {
         preoutput[doc.place] = {};
       }
 
       if (typeof preoutput[doc.place][doc.question._id] === 'undefined') {
-        preoutput[doc.place][doc.question._id] = Object.assign({}, doc.question);
+        preoutput[doc.place][doc.question._id] = Object.assign(
+          {},
+          doc.question
+        );
       }
 
       if (!preoutput[doc.place][doc.question._id].total) {
         preoutput[doc.place][doc.question._id].total = 0;
       }
 
-      preoutput[doc.place][doc.question._id].answers = [...preoutput[doc.place][doc.question._id].answers];
+      preoutput[doc.place][doc.question._id].answers = [
+        ...preoutput[doc.place][doc.question._id].answers,
+      ];
 
       preoutput[doc.place][doc.question._id].answers.forEach((answer, i) => {
-        preoutput[doc.place][doc.question._id].answers[i] = Object.assign({}, preoutput[doc.place][doc.question._id].answers[i]);
+        preoutput[doc.place][doc.question._id].answers[i] = Object.assign(
+          {},
+          preoutput[doc.place][doc.question._id].answers[i]
+        );
 
         if (!preoutput[doc.place][doc.question._id].answers[i].count) {
           preoutput[doc.place][doc.question._id].answers[i].count = 0;
@@ -86,7 +96,7 @@ module.exports = router => {
       const docs = preoutput[place];
       const row = {
         place: place,
-        questions: docs
+        questions: docs,
       };
       output.push(row);
     }
@@ -120,10 +130,13 @@ module.exports = router => {
     await Answer.insertMany(body);
 
     const slug = internalSlugify(body[0].place);
-    const file = __dirname + `/responses/${slug}.json`;
-    if (fs.existsSync(file)) {
-      response = require(file);
-    }
+
+    [slug, 'standard'].forEach((name) => {
+      const file = __dirname + `/responses/${slug}.json`;
+      if (fs.existsSync(file)) {
+        response = require(file);
+      }
+    });
 
     await res.json(response);
   });
