@@ -162,7 +162,7 @@ module.exports = (router) => {
             text: 'Tack för att du deltog!',
             links: [
               {
-                text: `Läs mer om coronaviruset i Region ${region} på 1177`,
+                text: `Läs mer om coronaviruset i Region ${region} på 1177.se`,
                 link: `https://www.1177.se/${internalSlugify(regionSlug, false)}/corona/`
               }
             ]
