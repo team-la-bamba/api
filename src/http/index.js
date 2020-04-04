@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
-import { loadFilesAsync } from '../lib/utils';
+import { loadFiles } from '../lib/utils';
 import { asyncRouter } from './utils';
 
 const http = async (app) => {
@@ -14,7 +14,7 @@ const http = async (app) => {
 
   const router = asyncRouter(express.Router());
   const controllers = path.join(__dirname, 'controllers');
-  (await loadFilesAsync(controllers)).forEach(file => {
+  loadFiles(controllers).forEach(file => {
     require(path.join(controllers, file))(router);
   });
   app.use('/', router);
