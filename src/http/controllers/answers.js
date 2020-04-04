@@ -81,6 +81,8 @@ module.exports = (router) => {
         );
       }
 
+      preoutput[doc.place][doc.question._id].answer = doc.answer;
+
       if (!preoutput[doc.place][doc.question._id].total) {
         preoutput[doc.place][doc.question._id].total = 0;
       }
@@ -107,28 +109,6 @@ module.exports = (router) => {
         }
       });
     });
-
-    /*
-      answers.forEach((answer) => {
-    answer.questions.forEach((question) => {
-      if (typeof questions[question._id] === 'undefined') {
-        questions[question._id] = {
-          question: question,
-          places: [],
-        };
-      }
-
-      if (!question.answers) {
-        return;
-      }
-
-      questions[question._id].places.push({
-        place: answer.place,
-        answers: question.answers,
-      });
-    });
-  });
-  */
 
     for (const place in preoutput) {
       preoutput[place] = Object.values(preoutput[place]);
