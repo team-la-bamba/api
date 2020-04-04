@@ -1,6 +1,7 @@
 import fs from 'fs';
 import mongoose from 'mongoose';
 import slugify from 'slugify';
+import defaultPostResponse from '';
 
 const internalSlugify = (s) => {
   s = s.replace(/[*+~.()'"!:@_]/g, '-');
@@ -129,14 +130,15 @@ module.exports = (router) => {
 
     await Answer.insertMany(body);
 
-    const slug = internalSlugify(body[0].place);
-
-    [slug, 'standard'].forEach(name => {
-      const file = __dirname + `/responses/${name}.json`;
-      if (fs.existsSync(file)) {
-        response = require(file);
+    try {
+      response = await fs.promise.readFile(`../responses/${internalSlugify(body[0].place).json}`);
+    } catch {
+      try {
+        response = await fs.promise.readFile('../responses/standard.json');
+      } catch {
+        // Do nothing.
       }
-    });
+    }
 
     await res.json(response);
   });
