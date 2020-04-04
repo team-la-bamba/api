@@ -44,7 +44,7 @@ Hello, world
     {
       "text": "Nej",
       "weight": 10
-      }
+    }
   ]
 }
 ```
