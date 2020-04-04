@@ -7,7 +7,11 @@ spec:
   selector:
     matchLabels:
       name: node-app
-  replicas: 1
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
   revisionHistoryLimit: 1
   template:
     metadata:
@@ -15,6 +19,16 @@ spec:
         name: node-app
     spec:
       containers:
+        - name: app
+          imagePullPolicy: Always
+          image: registry.gitlab.com/team-la-bamba/poll-app:latest
+          ports:
+            - containerPort: 80
+              name: web
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 150m
         - name: api
           env:
             - name: MONGODB_URI
@@ -43,6 +57,10 @@ spec:
   ports:
     - port: 3000
       targetPort: 3000
+      name: api-http
+    - port: 80
+      targetPort: 80
+      name: app-http
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -53,6 +71,12 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
+    - host: app.labamba.space
+      http:
+        paths:
+          - backend:
+              serviceName: api-svc
+              servicePort: 80
     - host: api.labamba.space
       http:
         paths:
