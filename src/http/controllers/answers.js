@@ -119,8 +119,6 @@ module.exports = (router) => {
     const preoutput = {};
 
     result.forEach((doc) => {
-      const realAnswer = doc.answer;
-
       if (typeof preoutput[doc.place] === 'undefined') {
         preoutput[doc.place] = {};
       }
@@ -131,12 +129,6 @@ module.exports = (router) => {
           {},
           doc.question
         );
-      }
-
-      preoutput[doc.place][doc.question._id].answer = realAnswer;
-
-      if (!preoutput[doc.place][doc.question._id].total) {
-        preoutput[doc.place][doc.question._id].total = 0;
       }
 
       preoutput[doc.place][doc.question._id].answers = [
@@ -155,9 +147,8 @@ module.exports = (router) => {
           };
         }
 
-        if (answer._id.toString() === realAnswer.toString()) {
+        if (answer._id.toString() === doc.answer.toString()) {
           preoutput[doc.place][doc.question._id].answers[i].count += 1;
-          preoutput[doc.place][doc.question._id].total += 1;
         }
       });
     });
@@ -189,7 +180,10 @@ module.exports = (router) => {
       answer.questions.forEach((question) => {
         if (typeof groupedByQuestions[question._id] === 'undefined') {
           groupedByQuestions[question._id] = {
-            question: question,
+            question: {
+              ...question,
+              total: 0,
+            },
             places: [],
           };
         }
@@ -197,6 +191,10 @@ module.exports = (router) => {
         if (!question.answers) {
           return;
         }
+
+        question.answers.forEach((a) => {
+          groupedByQuestions[question._id].question.total += a.count;
+        });
 
         groupedByQuestions[question._id].places.push({
           place: answer.place,
