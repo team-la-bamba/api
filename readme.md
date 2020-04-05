@@ -66,6 +66,10 @@ Hello, world
 > GET /answers?lang=en
 > GET /answers?region=Stockholms Län
 
+or with same queries
+
+> GET /timeseries
+
 [
   {
     "question": {

@@ -2,8 +2,13 @@ import path from 'path';
 import fs from 'fs';
 import mongoose from 'mongoose';
 import slugify from 'slugify';
-import { promisify } from 'util';
 import groupedPlaces from '../../../data/regions+municipalities.json';
+import tinytime from 'tinytime';
+
+const dateFormat = tinytime('{YYYY}-{Mo}-{DD}', {
+  padMonth: true,
+  padDays: true,
+});
 
 const internalSlugify = (s, lower = true) => {
   s = s.replace(/[*+~.()'"!:@_]/g, '-');
@@ -14,49 +19,89 @@ const internalSlugify = (s, lower = true) => {
 
 const Answer = mongoose.model('Answer');
 
+const getQuery = req => {
+  const query = {};
+
+  if (req.query.place) {
+    query['place'] = {
+      $regex: new RegExp('^' + req.query.place.toLowerCase(), 'i'),
+    };
+  } else if (req.query.region) {
+    // find municipalities for region.
+    const region = groupedPlaces
+      .filter((row) => {
+        return row.region.toLowerCase() === req.query.region.toLowerCase();
+      })
+      .pop();
+
+    query['place'] = {
+      $in: region.municipalities,
+    };
+  }
+
+  if (req.query.from && req.query.to) {
+    const to = new Date(Date.parse(req.query.to));
+    to.setHours(23, 59, 59);
+    query['created_at'] = {
+      $gte: Date.parse(req.query.from),
+      $lte: to,
+    };
+  } else if (req.query.from) {
+    query['created_at'] = {
+      $gte: Date.parse(req.query.from),
+    };
+  } else {
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    date.setHours(0, 0, 0, 0);
+
+    query['created_at'] = {
+      $gte: date,
+    };
+  }
+
+  return query;
+}
+
 module.exports = (router) => {
-  router.get('/answers', async (req, res) => {
-    const query = {};
+  router.get('/timeseries', async (req, res) => {
+    const query = getQuery(req);
     const lang = req.query.lang ? req.query.lang : 'sv';
+    const result = await (
+      await Answer.find(query).populate('question').lean()
+    ).filter((doc) => {
+      if (!doc.question) {
+        return false;
+      }
 
-    if (req.query.place) {
-      query['place'] = {
-        $regex: new RegExp('^' + req.query.place.toLowerCase(), 'i'),
-      };
-    } else if (req.query.region) {
-      // find municipalities for region.
-      const region = groupedPlaces
-        .filter((row) => {
-          return row.region.toLowerCase() === req.query.region.toLowerCase();
-        })
-        .pop();
+      return doc.question.lang && doc.question.lang === lang;
+    });
 
-      query['place'] = {
-        $in: region.municipalities,
-      };
-    }
+    let output = {};
 
-    if (req.query.from && req.query.to) {
-      const to = new Date(Date.parse(req.query.to));
-      to.setHours(23, 59, 59);
-      query['created_at'] = {
-        $gte: Date.parse(req.query.from),
-        $lte: to,
-      };
-    } else if (req.query.from) {
-      query['created_at'] = {
-        $gte: Date.parse(req.query.from),
-      };
-    } else {
-      const date = new Date();
-      date.setDate(date.getDate() - 1);
-      date.setHours(0, 0, 0, 0);
+    result.forEach(doc => {
+      const date = dateFormat.render(doc.created_at);
 
-      query['created_at'] = {
-        $gte: date,
+      if (typeof output[date] === 'undefined') {
+        output[date] = 0;
+      }
+
+      output[date] += 1;
+    });
+
+    for (let key in output) {
+      output[key] = {
+        date: key,
+        total: output[key]
       };
     }
 
+    await res.json(Object.values(output));
+  });
+
+  router.get('/answers', async (req, res) => {
+    const query = getQuery(req);
+    const lang = req.query.lang ? req.query.lang : 'sv';
     const result = await (
       await Answer.find(query).populate('question').lean()
     ).filter((doc) => {
