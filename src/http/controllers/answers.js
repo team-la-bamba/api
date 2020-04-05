@@ -37,7 +37,7 @@ module.exports = (router) => {
     }
 
     if (req.query.from && req.query.to) {
-      const to = Date.parse(req.query.to);
+      const to = new Date(Date.parse(req.query.to));
       to.setHours(23, 59, 59);
       query['created_at'] = {
         $gte: Date.parse(req.query.from),
