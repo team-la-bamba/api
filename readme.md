@@ -1,6 +1,8 @@
-## La bamba API
+# Kristempen API
 
-Hello, world
+[http://api.labamba.space/](http://api.labamba.space/)
+
+This is one of our contribution for [https://www.hackthecrisis.se/](https://www.hackthecrisis.se/).
 
 ## Endpoints
 
