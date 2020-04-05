@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import slugify from 'slugify';
 import groupedPlaces from '../../../data/regions+municipalities.json';
 import tinytime from 'tinytime';
+import logger from '../../lib/logger';
 
 const dateFormat = tinytime('{YYYY}-{Mo}-{DD}', {
   padMonth: true,
@@ -118,6 +119,8 @@ module.exports = (router) => {
       }
     );
 
+    await logger.debug('Found %d answers: %j', result.length, result);
+
     const preoutput = {};
 
     result.forEach((doc) => {
@@ -208,6 +211,8 @@ module.exports = (router) => {
         groupedByQuestions[question._id].places.push(row);
       });
     });
+
+    await logger.debug('Response: %j', groupedByQuestions);
 
     await res.json(Object.values(groupedByQuestions));
   });
