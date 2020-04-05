@@ -19,7 +19,7 @@ const internalSlugify = (s, lower = true) => {
 
 const Answer = mongoose.model('Answer');
 
-const getQuery = req => {
+const getQuery = (req) => {
   const query = {};
 
   if (req.query.place) {
@@ -60,8 +60,12 @@ const getQuery = req => {
     };
   }
 
+  if (req.query.question) {
+    query['question'] = req.query.question;
+  }
+
   return query;
-}
+};
 
 module.exports = (router) => {
   router.get('/timeseries', async (req, res) => {
@@ -79,7 +83,7 @@ module.exports = (router) => {
 
     let output = {};
 
-    result.forEach(doc => {
+    result.forEach((doc) => {
       const date = dateFormat.render(doc.created_at);
 
       if (typeof output[date] === 'undefined') {
@@ -92,7 +96,7 @@ module.exports = (router) => {
     for (let key in output) {
       output[key] = {
         date: key,
-        total: output[key]
+        total: output[key],
       };
     }
 
@@ -105,6 +109,9 @@ module.exports = (router) => {
     const result = (await Answer.find(query).populate('question').lean())
       .filter((doc) => {
         if (!doc.question) {
+          return false;
+        }
+        if (!doc.answer) {
           return false;
         }
         return doc.question.lang && doc.question.lang === lang;
@@ -121,35 +128,29 @@ module.exports = (router) => {
       if (typeof preoutput[doc.place][doc.question._id] === 'undefined') {
         preoutput[doc.place][doc.question._id] = Object.assign(
           {},
+          {},
           doc.question
         );
-      }
-
-      preoutput[doc.place][doc.question._id].answer = doc.answer;
-
-      if (!preoutput[doc.place][doc.question._id].total) {
-        preoutput[doc.place][doc.question._id].total = 0;
       }
 
       preoutput[doc.place][doc.question._id].answers = [
         ...preoutput[doc.place][doc.question._id].answers,
       ];
 
-      preoutput[doc.place][doc.question._id].answers.forEach((answer, i) => {
-        preoutput[doc.place][doc.question._id].answers[i] = Object.assign(
-          {},
-          preoutput[doc.place][doc.question._id].answers[i]
-        );
-
-        if (!preoutput[doc.place][doc.question._id].answers[i].count) {
-          preoutput[doc.place][doc.question._id].answers[i].count = 0;
+      doc.question.answers.forEach((answer, i) => {
+        if (
+          typeof preoutput[doc.place][doc.question._id].answers[i].count ===
+          'undefined'
+        ) {
+          preoutput[doc.place][doc.question._id].answers[i] = {
+            _id: answer._id,
+            text: answer.text,
+            count: 0,
+          };
         }
 
-        if (answer._id && doc.answer) {
-          if (answer._id.toString() === doc.answer.toString()) {
-            preoutput[doc.place][doc.question._id].answers[i].count += 1;
-            preoutput[doc.place][doc.question._id].total += 1;
-          }
+        if (answer._id.toString() === doc.answer.toString()) {
+          preoutput[doc.place][doc.question._id].answers[i].count += 1;
         }
       });
     });
@@ -181,7 +182,10 @@ module.exports = (router) => {
       answer.questions.forEach((question) => {
         if (typeof groupedByQuestions[question._id] === 'undefined') {
           groupedByQuestions[question._id] = {
-            question: question,
+            question: {
+              ...question,
+              total: 0,
+            },
             places: [],
           };
         }
@@ -190,10 +194,18 @@ module.exports = (router) => {
           return;
         }
 
-        groupedByQuestions[question._id].places.push({
+        const row = {
           place: answer.place,
           answers: question.answers,
+          total: 0,
+        };
+
+        question.answers.forEach((a) => {
+          groupedByQuestions[question._id].question.total += a.count;
+          row.total += a.count;
         });
+
+        groupedByQuestions[question._id].places.push(row);
       });
     });
 
@@ -261,7 +273,9 @@ module.exports = (router) => {
           };
         } else {
           response = JSON.parse(
-            await fs.promises.readFile(path.resolve('data/responses/standard.json'))
+            await fs.promises.readFile(
+              path.resolve('data/responses/standard.json')
+            )
           );
         }
       } catch {
