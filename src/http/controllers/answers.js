@@ -102,15 +102,14 @@ module.exports = (router) => {
   router.get('/answers', async (req, res) => {
     const query = getQuery(req);
     const lang = req.query.lang ? req.query.lang : 'sv';
-    const result = await (
-      await Answer.find(query).populate('question').lean()
-    ).filter((doc) => {
-      if (!doc.question) {
-        return false;
+    const result = (await Answer.find(query).populate('question').lean())
+      .filter((doc) => {
+        if (!doc.question) {
+          return false;
+        }
+        return doc.question.lang && doc.question.lang === lang;
       }
-
-      return doc.question.lang && doc.question.lang === lang;
-    });
+    );
 
     const preoutput = {};
 
