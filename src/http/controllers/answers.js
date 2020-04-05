@@ -71,15 +71,14 @@ const getQuery = (req) => {
 module.exports = (router) => {
   router.get('/timeseries', async (req, res) => {
     const query = getQuery(req);
-    const lang = req.query.lang ? req.query.lang : 'sv';
-    const result = await (
+    const result = (
       await Answer.find(query).populate('question').lean()
     ).filter((doc) => {
       if (!doc.question) {
         return false;
       }
 
-      return doc.question.lang && doc.question.lang === lang;
+      return true;
     });
 
     let output = {};
@@ -106,18 +105,18 @@ module.exports = (router) => {
 
   router.get('/answers', async (req, res) => {
     const query = getQuery(req);
-    const lang = req.query.lang ? req.query.lang : 'sv';
-    const result = (await Answer.find(query).populate('question').lean())
-      .filter((doc) => {
-        if (!doc.question) {
-          return false;
-        }
-        if (!doc.answer) {
-          return false;
-        }
-        return doc.question.lang && doc.question.lang === lang;
+    const result = (
+      await Answer.find(query).populate('question').lean()
+    ).filter((doc) => {
+      if (!doc.question) {
+        return false;
       }
-    );
+      if (!doc.answer) {
+        return false;
+      }
+
+      return true;
+    });
 
     await logger.debug('Found %d answers: %j', result.length, result);
 

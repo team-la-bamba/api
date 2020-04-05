@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 module.exports = new mongoose.Schema(
   {
     text: {
-      type: String,
+      type: Object
     },
     type: {
       type: String,
@@ -15,7 +15,7 @@ module.exports = new mongoose.Schema(
     },
     answers: [{
       text: {
-        type: String,
+        type: Object,
       },
       weight: {
         type: Number
