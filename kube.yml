@@ -41,6 +41,8 @@ spec:
               cpu: 150m
         - name: api
           env:
+            - name: NODE_ENV
+              value: "DEBUG"
             - name: MONGODB_URI
               valueFrom:
                 secretKeyRef:
