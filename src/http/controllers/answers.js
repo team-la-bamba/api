@@ -192,14 +192,18 @@ module.exports = (router) => {
           return;
         }
 
-        question.answers.forEach((a) => {
-          groupedByQuestions[question._id].question.total += a.count;
-        });
-
-        groupedByQuestions[question._id].places.push({
+        const row = {
           place: answer.place,
           answers: question.answers,
+          total: 0,
+        };
+
+        question.answers.forEach((a) => {
+          groupedByQuestions[question._id].question.total += a.count;
+          row.total += a.count;
         });
+
+        groupedByQuestions[question._id].places.push(row);
       });
     });
 
