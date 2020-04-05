@@ -19,7 +19,7 @@ const internalSlugify = (s, lower = true) => {
 
 const Answer = mongoose.model('Answer');
 
-const getQuery = req => {
+const getQuery = (req) => {
   const query = {};
 
   if (req.query.place) {
@@ -61,7 +61,7 @@ const getQuery = req => {
   }
 
   return query;
-}
+};
 
 module.exports = (router) => {
   router.get('/timeseries', async (req, res) => {
@@ -79,7 +79,7 @@ module.exports = (router) => {
 
     let output = {};
 
-    result.forEach(doc => {
+    result.forEach((doc) => {
       const date = dateFormat.render(doc.created_at);
 
       if (typeof output[date] === 'undefined') {
@@ -92,7 +92,7 @@ module.exports = (router) => {
     for (let key in output) {
       output[key] = {
         date: key,
-        total: output[key]
+        total: output[key],
       };
     }
 
@@ -109,12 +109,18 @@ module.exports = (router) => {
         return false;
       }
 
+      if (!doc.answer) {
+        return false;
+      }
+
       return doc.question.lang && doc.question.lang === lang;
     });
 
     const preoutput = {};
 
     result.forEach((doc) => {
+      const realAnswer = doc.answer;
+
       if (typeof preoutput[doc.place] === 'undefined') {
         preoutput[doc.place] = {};
       }
@@ -122,11 +128,12 @@ module.exports = (router) => {
       if (typeof preoutput[doc.place][doc.question._id] === 'undefined') {
         preoutput[doc.place][doc.question._id] = Object.assign(
           {},
+          {},
           doc.question
         );
       }
 
-      preoutput[doc.place][doc.question._id].answer = doc.answer;
+      preoutput[doc.place][doc.question._id].answer = realAnswer;
 
       if (!preoutput[doc.place][doc.question._id].total) {
         preoutput[doc.place][doc.question._id].total = 0;
@@ -136,21 +143,21 @@ module.exports = (router) => {
         ...preoutput[doc.place][doc.question._id].answers,
       ];
 
-      preoutput[doc.place][doc.question._id].answers.forEach((answer, i) => {
-        preoutput[doc.place][doc.question._id].answers[i] = Object.assign(
-          {},
-          preoutput[doc.place][doc.question._id].answers[i]
-        );
-
-        if (!preoutput[doc.place][doc.question._id].answers[i].count) {
-          preoutput[doc.place][doc.question._id].answers[i].count = 0;
+      doc.question.answers.forEach((answer, i) => {
+        if (
+          typeof preoutput[doc.place][doc.question._id].answers[i].count ===
+          'undefined'
+        ) {
+          preoutput[doc.place][doc.question._id].answers[i] = {
+            _id: answer._id,
+            text: answer.text,
+            count: 0,
+          };
         }
 
-        if (answer._id && doc.answer) {
-          if (answer._id.toString() === doc.answer.toString()) {
-            preoutput[doc.place][doc.question._id].answers[i].count += 1;
-            preoutput[doc.place][doc.question._id].total += 1;
-          }
+        if (answer._id.toString() === realAnswer.toString()) {
+          preoutput[doc.place][doc.question._id].answers[i].count += 1;
+          preoutput[doc.place][doc.question._id].total += 1;
         }
       });
     });
@@ -262,7 +269,9 @@ module.exports = (router) => {
           };
         } else {
           response = JSON.parse(
-            await fs.promises.readFile(path.resolve('data/responses/standard.json'))
+            await fs.promises.readFile(
+              path.resolve('data/responses/standard.json')
+            )
           );
         }
       } catch {
