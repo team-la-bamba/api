@@ -263,18 +263,36 @@ module.exports = (router) => {
               break;
           }
 
-          response = {
-            text: 'Tack för att du deltog!',
-            links: [
-              {
-                text: `Läs mer om coronaviruset i Region ${region} på 1177.se`,
-                link: `https://www.1177.se/${internalSlugify(
-                  regionSlug,
-                  false
-                )}/corona/`,
-              },
-            ],
-          };
+          switch (body[0].lang) {
+            case 'en':
+              response = {
+                text: 'Thank you for attending!',
+                links: [
+                  {
+                    text: `Read more about the corona virus in Region ${region} on 1177.se`,
+                    link: `https://www.1177.se/${internalSlugify(
+                      regionSlug,
+                      false
+                    )}/corona/`,
+                  },
+                ],
+              };
+              break;
+            default:
+              response = {
+                text: 'Tack för att du deltog!',
+                links: [
+                  {
+                    text: `Läs mer om coronaviruset i Region ${region} på 1177.se`,
+                    link: `https://www.1177.se/${internalSlugify(
+                      regionSlug,
+                      false
+                    )}/corona/`,
+                  },
+                ],
+              };
+              break;
+          }
         } else {
           response = JSON.parse(
             await fs.promises.readFile(
