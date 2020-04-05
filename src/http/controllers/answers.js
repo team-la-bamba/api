@@ -60,6 +60,10 @@ const getQuery = (req) => {
     };
   }
 
+  if (req.query.question) {
+    query['question'] = req.query.question;
+  }
+
   return query;
 };
 
