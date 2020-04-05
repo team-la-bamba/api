@@ -12,7 +12,6 @@ module.exports = router => {
   });
 
   router.post('/questions', validate([
-    check('text').exists().isString(),
     check('answers').exists().isArray(),
   ]), async (req, res) => {
     if (typeof req.body.type === 'string' && (req.body.type !== 'radio' && req.body.type !== 'checkbox')) {
