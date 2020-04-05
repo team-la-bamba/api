@@ -19,12 +19,22 @@ spec:
         name: node-app
     spec:
       containers:
+        - name: dashboard
+          imagePullPolicy: Always
+          image: registry.gitlab.com/team-la-bamba/dashboard:latest
+          ports:
+            - containerPort: 81
+              name: dashboard
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 150m
         - name: app
           imagePullPolicy: Always
           image: registry.gitlab.com/team-la-bamba/poll-app:latest
           ports:
             - containerPort: 80
-              name: web
+              name: web-app
           resources:
             limits:
               memory: 256Mi
@@ -40,7 +50,7 @@ spec:
           image: registry.gitlab.com/team-la-bamba/api:latest
           ports:
             - containerPort: 3000
-              name: web
+              name: web-api
           resources:
             limits:
               memory: 256Mi
@@ -61,6 +71,9 @@ spec:
     - port: 80
       targetPort: 80
       name: app-http
+    - port: 81
+      targetPort: 81
+      name: dashboard-http
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -71,6 +84,12 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
+    - host: dashboard.labamba.space
+      http:
+        paths:
+          - backend:
+              serviceName: api-svc
+              servicePort: 81
     - host: app.labamba.space
       http:
         paths:

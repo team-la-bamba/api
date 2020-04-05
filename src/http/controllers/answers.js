@@ -5,8 +5,6 @@ import slugify from 'slugify';
 import { promisify } from 'util';
 import groupedPlaces from '../../../data/regions+municipalities.json';
 
-const readFile = promisify(fs.readFile);
-
 const internalSlugify = (s, lower = true) => {
   s = s.replace(/[*+~.()'"!:@_]/g, '-');
   return slugify(s, {
@@ -39,9 +37,11 @@ module.exports = (router) => {
     }
 
     if (req.query.from && req.query.to) {
+      const to = Date.parse(req.query.to);
+      to.setHours(23, 59, 59);
       query['created_at'] = {
         $gte: Date.parse(req.query.from),
-        $lte: Date.parse(req.query.to),
+        $lte: to,
       };
     } else if (req.query.from) {
       query['created_at'] = {
@@ -177,7 +177,7 @@ module.exports = (router) => {
 
     try {
       response = JSON.parse(
-        await readFile(
+        await fs.promises.readFile(
           path.resolve(`data/responses/${internalSlugify(body[0].place)}.json`)
         )
       );
@@ -217,7 +217,7 @@ module.exports = (router) => {
           };
         } else {
           response = JSON.parse(
-            await readFile(path.resolve('data/responses/standard.json'))
+            await fs.promises.readFile(path.resolve('data/responses/standard.json'))
           );
         }
       } catch {
